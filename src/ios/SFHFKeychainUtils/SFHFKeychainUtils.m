@@ -79,7 +79,7 @@ static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
                         kSecClassGenericPassword,
                         username,
                         serviceName,
-                        kCFBooleanTrue,
+                        kCFBooleanFalse,
                         nil];
     
     NSMutableDictionary *query = [[NSMutableDictionary alloc] initWithObjects: objects forKeys: keys];
@@ -211,7 +211,7 @@ static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
                                 serviceName,
                                 serviceName,
                                 username,
-                                kCFBooleanTrue,
+                                kCFBooleanFalse,
                                 nil];
             
             NSDictionary *query = [[NSDictionary alloc] initWithObjects: objects forKeys: keys];
@@ -238,7 +238,7 @@ static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
                             serviceName,
                             username,
                             [password dataUsingEncoding: NSUTF8StringEncoding],
-                            kCFBooleanTrue,
+                            kCFBooleanFalse,
                             nil];
         
         NSDictionary *query = [[NSDictionary alloc] initWithObjects: objects forKeys: keys];
@@ -289,7 +289,7 @@ static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
                         username,
                         serviceName,
                         kCFBooleanTrue,
-                        kCFBooleanTrue,
+                        kCFBooleanFalse,
                         nil];
     
     NSDictionary *query = [[NSDictionary alloc] initWithObjects: objects forKeys: keys];
