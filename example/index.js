@@ -18,7 +18,7 @@ function onDeviceReady() {
 }
 
 function onGet() {
-    var kc = new Keychain();
+    var kc = new CordovaKeychain();
 
     var key = document.getElementById("keytoget").value;
     var servicename = document.getElementById("servicename").value
@@ -34,7 +34,7 @@ function onGet() {
 }
 
 function onSet() {
-    var kc = new Keychain();
+    var kc = new CordovaKeychain();
 
     var key = document.getElementById("keytoset").value;
     var value = document.getElementById("valuetoset").value;
@@ -51,7 +51,7 @@ function onSet() {
 }
 
 function onRemove() {
-    var kc = new Keychain();
+    var kc = new CordovaKeychain();
 
     var key = document.getElementById("keytoremove").value;
     var servicename = document.getElementById("servicename").value

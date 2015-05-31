@@ -14,8 +14,8 @@
 
     <asset src="www/keychain.js" target="plugins/keychain.js" />
 
-    <js-module src="www/keychain.js" name="Keychain">
-        <clobbers target="window.Keychain" />
+    <js-module src="www/keychain.js" name="CordovaKeychain">
+        <clobbers target="window.CordovaKeychain" />
     </js-module>
 
     <!-- ios -->
