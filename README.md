@@ -2,7 +2,11 @@ Keychain Plugin for Apache Cordova
 =====================================
 created by Shazron Abdullah
 
-[Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) except for the SFHFKeychainUtils code that is under **src/ios/SFHFKeychainUtils**
+### Installation
+
+```shell
+cordova plugin add cordova-plugin-ios-keychain
+```
 
 Follows the [Cordova Plugin spec](http://cordova.apache.org/docs/en/3.0.0/plugin_ref_spec.md), so that it works with [Plugman](https://github.com/apache/cordova-plugman), or you can install it manually below.
 
@@ -77,3 +81,7 @@ kc.setForKey(successCallback, failureCallback, 'key', 'servicename', 'value');
  */
 kc.removeForKey(successCallback, failureCallback, 'key', 'servicename');
 ```
+
+### License 
+
+[Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) except for the SFHFKeychainUtils code that is under **src/ios/SFHFKeychainUtils**
