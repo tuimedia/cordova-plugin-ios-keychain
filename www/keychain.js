@@ -21,23 +21,49 @@
 
 var exec = require('cordova/exec');
 
-var Keychain = function() {
-	this.serviceName = "Keychain";
+
+var Keychain = {
+	serviceName: "Keychain",
+
+	get: function(success, error, key, touchIDMessage) {
+		exec(success, error, this.serviceName, "get", [key, touchIDMessage]);
+	},
+	set: function(success, error, key, value, useTouchID) {
+		exec(success, error, this.serviceName, "set", [key, value, useTouchID]);
+	},
+
+	setJson: function(success, error, key, obj, useTouchID) {
+		var value = JSON.stringify(obj);
+		value = value
+			.replace(/[\\]/g, '\\\\')
+			.replace(/[\"]/g, '\\\"')
+			.replace(/[\/]/g, '\\/')
+			.replace(/[\b]/g, '\\b')
+			.replace(/[\f]/g, '\\f')
+			.replace(/[\n]/g, '\\n')
+			.replace(/[\r]/g, '\\r')
+			.replace(/[\t]/g, '\\t');
+
+		exec(success, error, this.serviceName, "set", [key, value, useTouchID]);
+	},
+
+	getJson: function(success, error, key, touchIDMessage) {
+		var cb = function(v) {
+			v = v.replace(/\\\"/g, '"');
+
+			try {
+				var obj = JSON.parse(v);
+				success(obj);
+			} catch(e) {
+				error(e);
+			}
+		};
+		exec(cb, error, this.serviceName, "get", [key, touchIDMessage]);
+	},
+
+	remove: function(successCallback, failureCallback, key) {
+		exec(successCallback, failureCallback, this.serviceName, "remove", [key]);
+	}
 };
-
-Keychain.prototype.getForKey = function(successCallback, failureCallback, key, servicename)
-{
-	exec(successCallback, failureCallback, this.serviceName, "getForKey", [key, servicename]);
-}
-
-Keychain.prototype.setForKey = function(successCallback, failureCallback, key, servicename, value)
-{
-	exec(successCallback, failureCallback, this.serviceName, "setForKey", [key, servicename, value]);
-}
-
-Keychain.prototype.removeForKey = function(successCallback, failureCallback, key, servicename)
-{
-	exec(successCallback, failureCallback, this.serviceName, "removeForKey", [key, servicename]);
-}
 
 module.exports = Keychain;

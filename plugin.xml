@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="cordova-plugin-ios-keychain"
-    version="3.0.0">
+    version="3.0.1">
 
     <name>KeyChain Plugin for Cordova iOS</name>
     <description>This plugin allows your app access to the iOS KeyChain from Cordova. See: https://developer.apple.com/library/mac/documentation/security/conceptual/keychainServConcepts/iPhoneTasks/iPhoneTasks.html</description>
@@ -14,9 +14,9 @@
 
     <asset src="www/keychain.js" target="plugins/keychain.js" />
 
-    <js-module src="www/keychain.js" name="CordovaKeychain">
-        <clobbers target="window.CordovaKeychain" />
-    </js-module>
+  	<js-module src="www/keychain.js" name="Keychain">
+      	<clobbers target="window.Keychain" />
+  	</js-module>
 
     <!-- ios -->
     <platform name="ios">
@@ -28,12 +28,11 @@
         </config-file>
 
         <header-file src="src/ios/CDVKeychain.h" />
-        <header-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.h"/>
+        <header-file src="src/ios/A0SimpleKeychain.h"/>
 
         <source-file src="src/ios/CDVKeychain.m"/>
-        <source-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.m" compiler-flags="-fobjc-arc" />
+        <source-file src="src/ios/A0SimpleKeychain.m"/>
 
         <framework src="Security.framework" />
-
     </platform>
 </plugin>

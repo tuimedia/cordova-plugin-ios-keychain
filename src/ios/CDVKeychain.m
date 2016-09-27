@@ -18,100 +18,89 @@
  */
 
 #import "CDVKeychain.h"
-#import "SFHFKeychainUtils.h"
+#import "A0SimpleKeychain.h"
 
 @implementation CDVKeychain
 
-- (void) getForKey:(CDVInvokedUrlCommand*)command
-{
-    [self.commandDelegate runInBackground:^{
-        NSArray* arguments = command.arguments;
-        CDVPluginResult* pluginResult = nil;
-        
-        if ([arguments count] >= 2)
-        {
-            NSString* key = [arguments objectAtIndex:0];
-            NSString* serviceName = [arguments objectAtIndex:1];
-            NSError* error = nil;
-            
-            NSString* value = [SFHFKeychainUtils getPasswordForUsername:key andServiceName:serviceName error:&error];
-            if (error == nil && value != nil) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:value];
-            } else {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                                 messageAsString:[NSString stringWithFormat:@"error retrieving value for key '%@' : %@", key, [error localizedDescription]]];
-            }
-        }
-        else
-        {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                             messageAsString:@"incorrect number of arguments for getForkey"];
-        }
-        
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
+- (void) get:(CDVInvokedUrlCommand*)command {
+  [self.commandDelegate runInBackground:^{
+    NSArray* arguments = command.arguments;
+    CDVPluginResult* pluginResult = nil;
+
+    if([arguments count] < 2) {
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+      messageAsString:@"incorrect number of arguments for getWithTouchID"];
+      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+      return;
+    }
+
+    NSString *key = [arguments objectAtIndex:0];
+    NSString *touchIDMessage = [arguments objectAtIndex:1];
+
+    NSString *message = NSLocalizedString(touchIDMessage, @"Prompt TouchID message");
+
+    A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
+
+    keychain.useAccessControl = YES;
+    keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
+
+    NSString *value = [keychain stringForKey:key promptMessage:message];
+
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:value];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  }];
 }
 
-- (void) setForKey:(CDVInvokedUrlCommand*)command
-{
-    [self.commandDelegate runInBackground:^{
-        NSArray* arguments = command.arguments;
-        CDVPluginResult* pluginResult = nil;
-        
-        if ([arguments count] >= 3)
-        {
-            NSString* key = [arguments objectAtIndex:0];
-            NSString* serviceName = [arguments objectAtIndex:1];
-            NSString* value = [arguments objectAtIndex:2];
-            NSError* error = nil;
-            
-            BOOL stored = [SFHFKeychainUtils storeUsername:key andPassword:value forServiceName:serviceName updateExisting:YES error:&error];
-            if (stored && error == nil) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-            } else {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
-            }
-        }
-        else
-        {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                             messageAsString:@"incorrect number of arguments for setForKey"];
-        }
+- (void) set:(CDVInvokedUrlCommand*)command {
+  [self.commandDelegate runInBackground:^{
+    NSArray* arguments = command.arguments;
+    CDVPluginResult* pluginResult = nil;
 
-        
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
+    if([arguments count] < 3) {
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+      messageAsString:@"incorrect number of arguments for setWithTouchID"];
+      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+      return;
+    }
+
+    NSString* key = [arguments objectAtIndex:0];
+    NSString* value = [arguments objectAtIndex:1];
+    BOOL useTouchID = [arguments objectAtIndex:2];
+
+    A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
+
+    if(useTouchID) {
+      keychain.useAccessControl = YES;
+      keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
+    }
+
+    [keychain setString:value forKey:key];
+
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  }];
 }
 
-- (void) removeForKey:(CDVInvokedUrlCommand*)command
-{
-    [self.commandDelegate runInBackground:^{
-        NSArray* arguments = command.arguments;
-        CDVPluginResult* pluginResult = nil;
-        
-        if ([arguments count] >= 2)
-        {
-            NSString* key = [arguments objectAtIndex:0];
-            NSString* serviceName = [arguments objectAtIndex:1];
-            NSError* error = nil;
-            
-            BOOL deleted = [SFHFKeychainUtils deleteItemForUsername:key andServiceName:serviceName error:&error];
-            if (deleted && error == nil) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-            } else {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
-            }
-        }
-        else
-        {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                             messageAsString:@"incorrect number of arguments for removeForKey"];
-        }
-        
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
-}
+- (void) remove:(CDVInvokedUrlCommand*)command {
+  [self.commandDelegate runInBackground:^{
+    NSArray* arguments = command.arguments;
+    CDVPluginResult* pluginResult = nil;
 
+    if([arguments count] < 1) {
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+      messageAsString:@"incorrect number of arguments for remove"];
+      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+      return;
+    }
+
+    NSString *key = [arguments objectAtIndex:0];
+
+    A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
+    [keychain deleteEntryForKey:key];
+
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  }];
+}
 
 @end
-

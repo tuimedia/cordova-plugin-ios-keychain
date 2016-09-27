@@ -2,86 +2,78 @@ Keychain Plugin for Apache Cordova
 =====================================
 created by Shazron Abdullah
 
+Updated by Max Lynch <max@ionic.io>
+
+Modified by Human Practice to disable iCloud sync.
+
 ### Installation
 
 ```shell
-cordova plugin add cordova-plugin-ios-keychain
+cordova plugin add https://github.com/humanpractice/cordova-plugin-ios-keychain
 ```
 
-Follows the [Cordova Plugin spec](http://cordova.apache.org/docs/en/3.0.0/plugin_ref_spec.md), so that it works with [Plugman](https://github.com/apache/cordova-plugman), or you can install it manually below.
+### iCloud keychain enabled
 
-Manually importing the plugin is not supported anymore, please use [Plugman](http://npmjs.org/plugman)     or the [Cordova CLI tool](http://npmjs.org/cordova)
-
-The "CordovaKeychain" object definition is installed globally.
-
-The plugin's JavaScript functions are called after creating the plugin object thus:
-
-        var kc = new CordovaKeychain();
-        kc.getForKey(win, fail, "some_key", "some_servicename");
-
-### iCloud keychain *disabled*
-
-This fork disables iCloud keychain syncing.
+iCloud keychain synchonizing is enabled, so the keychain will be mirrored across all devices *if* the user is signed in to iCloud (Settings > iCloud) and has iCloud keychain turned on (Settings > iCloud > Keychain)
 
 ### Usage
-
-**Important:**
-
-```js
-If you are saving a JSON string value in setForKey, for example after applying JSON.stringify on an object, you must escape the characters in that string, if not you cannot retrieve it using getForKey.
-
-var obj = { foo: 'bar' };
-var value = JSON.stringify(obj);
-value = value
-      .replace(/[\\]/g, '\\\\')
-      .replace(/[\"]/g, '\\\"')
-      .replace(/[\/]/g, '\\/')
-      .replace(/[\b]/g, '\\b')
-      .replace(/[\f]/g, '\\f')
-      .replace(/[\n]/g, '\\n')
-      .replace(/[\r]/g, '\\r')
-      .replace(/[\t]/g, '\\t');
-```
-
 
 See the **example** folder for example usage.
 
 ```js
-// Get a reference to the plugin first
-var kc = new Keychain();
-
 /*
- Retrieves a value for a key and servicename.
+ Retrieves a value for a key
 
  @param successCallback returns the value as the argument to the callback when successful
  @param failureCallback returns the error string as the argument to the callback, for a failure
  @param key the key to retrieve
- @param servicename the servicename to use
+ @param TouchIDMessage the message to show underneath the TouchID prompt (if any)
  */
-kc.getForKey(successCallback, failureCallback, 'key', 'servicename');
+Keychain.get(successCallback, failureCallback, 'key', 'TouchID Message');
 
 /*
- Sets a value for a key and servicename.
+ Sets a value for a key
 
  @param successCallback returns when successful
  @param failureCallback returns the error string as the argument to the callback, for a failure
  @param key the key to set
- @param servicename the servicename to use
  @param value the value to set
+ @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
  */
-kc.setForKey(successCallback, failureCallback, 'key', 'servicename', 'value');
+Keychain.set(successCallback, failureCallback, 'key', 'value', useTouchID);
 
 /*
- Removes a value for a key and servicename.
+ Removes a value for a key
 
  @param successCallback returns when successful
  @param failureCallback returns the error string as the argument to the callback
  @param key the key to remove
- @param servicename the servicename to use
  */
-kc.removeForKey(successCallback, failureCallback, 'key', 'servicename');
+Keychain.remove(successCallback, failureCallback, 'key');
+
+/*
+ Sets a JSON value for a key
+
+ @param successCallback returns when successful
+ @param failureCallback returns the error string as the argument to the callback, for a failure
+ @param key the key to set
+ @param value the value to set
+ @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ */
+Keychain.setJson(successCallback, failureCallback, 'key', 'value', useTouchID);
+
+/*
+ Gets a JSON value for a key
+
+ @param successCallback returns when successful
+ @param failureCallback returns the error string as the argument to the callback, for a failure
+ @param key the key to set
+ @param value the value to set
+ @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ */
+Keychain.getJson(successCallback, failureCallback, 'key', useTouchID);
 ```
 
-### License 
+### License
 
-[Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) except for the SFHFKeychainUtils code that is under **src/ios/SFHFKeychainUtils**
+[Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) except for the Auth0 SimpelKeychain code that is under MIT

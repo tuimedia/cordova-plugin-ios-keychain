@@ -16,7 +16,7 @@
  specific language governing permissions and limitations
  under the License.
  */
- 
+
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
@@ -24,8 +24,8 @@
 @interface CDVKeychain : CDVPlugin {
 }
 
-- (void) getForKey:(CDVInvokedUrlCommand*)command;
-- (void) setForKey:(CDVInvokedUrlCommand*)command;
-- (void) removeForKey:(CDVInvokedUrlCommand*)command;
+- (void) get:(CDVInvokedUrlCommand*)command;
+- (void) set:(CDVInvokedUrlCommand*)command;
+- (void) remove:(CDVInvokedUrlCommand*)command;
 
 @end
