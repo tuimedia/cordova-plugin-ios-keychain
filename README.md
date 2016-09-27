@@ -12,9 +12,9 @@ Modified by Human Practice to disable iCloud sync.
 cordova plugin add https://github.com/humanpractice/cordova-plugin-ios-keychain
 ```
 
-### iCloud keychain enabled
+### iCloud keychain *disabled*
 
-iCloud keychain synchonizing is enabled, so the keychain will be mirrored across all devices *if* the user is signed in to iCloud (Settings > iCloud) and has iCloud keychain turned on (Settings > iCloud > Keychain)
+This fork disables iCloud keychain syncing.
 
 ### Usage
 

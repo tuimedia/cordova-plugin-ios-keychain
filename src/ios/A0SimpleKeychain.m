@@ -284,6 +284,8 @@
     if (self.accessGroup) {
         attributes[(__bridge id)kSecAttrAccessGroup] = self.accessGroup;
     }
+
+    attributes[(__bridge id)kSecAttrSynchronizable] = NO;
 #endif
 
     return attributes;
