@@ -18,10 +18,8 @@ function onDeviceReady() {
 }
 
 function onGet() {
-    var kc = new CordovaKeychain();
-
     var key = document.getElementById("keytoget").value;
-    var servicename = document.getElementById("servicename").value
+    var touchIdMessage = 'TouchID Message'
 
     var win = function(value) {
             alert("GET SUCCESS - Key: " + key + " Value: " + value);
@@ -30,15 +28,14 @@ function onGet() {
             alert("GET FAIL - Key: " + key + " Error: " + error);
         };
 
-    kc.getForKey(win, fail, key, servicename);
+    Keychain.get(win, fail, key, touchIdMessage);
 }
 
 function onSet() {
-    var kc = new CordovaKeychain();
-
     var key = document.getElementById("keytoset").value;
     var value = document.getElementById("valuetoset").value;
-    var servicename = document.getElementById("servicename").value;
+
+    var useTouchID = false
 
     var win = function() {
             alert("SET SUCCESS - Key: " + key);
@@ -47,14 +44,11 @@ function onSet() {
             alert("SET FAIL - Key: " + key + " Error: " + error);
         };
 
-    kc.setForKey(win, fail, key, servicename, value);
+    Keychain.set(win, fail, key, value, useTouchID);
 }
 
 function onRemove() {
-    var kc = new CordovaKeychain();
-
     var key = document.getElementById("keytoremove").value;
-    var servicename = document.getElementById("servicename").value
 
     var win = function() {
             alert("REMOVE SUCCESS - Key: " + key);
@@ -63,5 +57,5 @@ function onRemove() {
             alert("REMOVE FAIL - Key: " + key + " Error: " + error);
         };
 
-    kc.removeForKey(win, fail, key, servicename);
+    Keychain.remove(win, fail, key);
 }
