@@ -45,7 +45,7 @@
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
     keychain.useAccessControl = YES;
-    keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
+    keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleAfterFirstUnlockThisDeviceOnly;
 
     NSString *value = [keychain stringForKey:key promptMessage:message];
 
@@ -77,6 +77,8 @@
     if(useTouchID) {
       keychain.useAccessControl = YES;
       keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
+    } else {
+      keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleAfterFirstUnlockThisDeviceOnly;
     }
 
     [keychain setString:value forKey:key];
