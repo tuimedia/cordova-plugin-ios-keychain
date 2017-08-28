@@ -46,8 +46,6 @@ public final class Keychain extends CordovaPlugin {
     public boolean execute(final String action, final JSONArray args,
                            final CallbackContext callbackContext) throws JSONException
     {
-        Log.v(TAG, "Keychain Plugin received: " + action + " args: " + args.toString());
-
         if (GET_VALUE.equals(action)) {
             final String key = args.getString(0);
             processGet(key, callbackContext);
