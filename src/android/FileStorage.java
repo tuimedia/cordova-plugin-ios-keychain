@@ -1,4 +1,4 @@
-// package com.humanpractice.cordova.keystorage;
+package com.humanpractice.cordova.keystorage;
 
 import android.content.Context;
 
@@ -27,7 +27,7 @@ final class FileStorage extends Logged {
             byte[] buffer = new byte[8192];
             int bytesRead;
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            while ((bytesRead = stream.read(buffer)) != 1) {
+            while ((bytesRead = stream.read(buffer)) != -1) {
                 bytes.write(buffer, 0, bytesRead);
             }
             return bytes.toByteArray();

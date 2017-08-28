@@ -1,4 +1,6 @@
-// package com.humanpractice.cordova.keystorage;
+package com.humanpractice.cordova.keystorage;
+
+import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,15 +14,19 @@ import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 
-class Encryption {
+final class Encryption {
     private static final String RSA_ALGORITHM = "RSA/ECB/PKCS1Padding";
     private static final String UTF_8 = "UTF-8";
 
     static String decrypt(byte[] value, PrivateKey privateKey) throws GeneralSecurityException, IOException {
-        Cipher output = Cipher.getInstance(RSA_ALGORITHM);
-        output.init(Cipher.DECRYPT_MODE, privateKey);
+        if (value == null || value.length == 0) {
+          return null;
+        }
 
-        CipherInputStream inputStream = new CipherInputStream(new ByteArrayInputStream(value), output);
+        Cipher decryption = Cipher.getInstance(RSA_ALGORITHM);
+        decryption.init(Cipher.DECRYPT_MODE, privateKey);
+
+        CipherInputStream inputStream = new CipherInputStream(new ByteArrayInputStream(value), decryption);
 
         ArrayList values = new ArrayList();
         int nextByte;
@@ -36,13 +42,13 @@ class Encryption {
     }
 
     static byte[] encrypt(String value, PublicKey publicKey) throws GeneralSecurityException, IOException {
-        Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        Cipher encryption = Cipher.getInstance(RSA_ALGORITHM);
+        encryption.init(Cipher.ENCRYPT_MODE, publicKey);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         CipherOutputStream cipherOutput = null;
         try {
-            cipherOutput = new CipherOutputStream(output, cipher);
+            cipherOutput = new CipherOutputStream(output, encryption);
             cipherOutput.write(value.getBytes(UTF_8));
         } finally {
             if (cipherOutput != null) {

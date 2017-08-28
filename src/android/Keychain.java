@@ -1,4 +1,4 @@
-// package com.humanpractice.cordova.keystorage;
+package com.humanpractice.cordova.keystorage;
 
 import android.util.Log;
 
@@ -12,9 +12,7 @@ import org.json.JSONException;
 /**
  * Android implementation of Key Storage Cordova Plugin
  */
-public class Keychain extends CordovaPlugin
-{
-
+public final class Keychain extends CordovaPlugin {
     private static final String TAG = Keychain.class.getSimpleName();
 
     private static final String GET_VALUE = "get";
@@ -56,7 +54,7 @@ public class Keychain extends CordovaPlugin
             return true;
         } else if (SET_VALUE.equals(action)) {
             final String key = args.getString(0);
-            final String value = args.getString(2);
+            final String value = args.getString(1);
             processSet(key, value, callbackContext);
             return true;
         } else if (REMOVE_VALUE.equals(action)) {

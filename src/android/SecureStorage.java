@@ -1,4 +1,4 @@
-// package com.humanpractice.cordova.keystorage;
+package com.humanpractice.cordova.keystorage;
 
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
@@ -54,7 +54,8 @@ public final class SecureStorage extends Logged {
             KeyStore keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null);
             PrivateKey privateKey = (PrivateKey) keyStore.getKey(key, null);
-            return Encryption.decrypt(fileStorage.readValue(key), privateKey);
+            byte[] encryptedValue = fileStorage.readValue(key);
+            return encryptedValue == null ? null : Encryption.decrypt(encryptedValue, privateKey);
         } catch (IOException e) {
             logException(e);
             throw new ReportableException(e);

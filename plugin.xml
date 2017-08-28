@@ -11,6 +11,7 @@
       Builds off the great work of ionic-team/cordova-plugin-ios-keychain (formerly shazron/KeychainPlugin)
       and pradeep1991singh/cordova-plugin-secure-key-store.
     </description>
+    <author>humanpractice, building on the work of ionic-team & shazron</author>
     <license>Apache 2.0</license>
     <keywords>keychain</keywords>
 
@@ -20,11 +21,10 @@
 
     <asset src="www/keychain.js" target="plugins/keychain.js" />
 
-  	<js-module src="www/keychain.js" name="Keychain">
-      	<clobbers target="window.Keychain"/>
-  	</js-module>
+    <js-module src="www/keychain.js" name="Keychain">
+        <clobbers target="Keychain"/>
+    </js-module>
 
-    <!-- ios -->
     <platform name="ios">
         <!-- feature tag in config.xml -->
         <config-file target="config.xml" parent="/widget">
@@ -48,11 +48,11 @@
                 <param name="android-package" value="com.humanpractice.cordova.keystorage.Keychain"/>
             </feature>
         </config-file>
-        <source-file src="src/android/Keychain.java" target-dir="src/com/humanpractice/cordova/keystorage/" />
-        <source-file src="src/android/SecureStorage.java" target-dir="src/com/humanpractice/cordova/keystorage/" />
-        <source-file src="src/android/FileStorage.java" target-dir="src/com/humanpractice/cordova/keystorage/" />
-        <source-file src="src/android/Encryption.java" target-dir="src/com/humanpractice/cordova/keystorage/" />
-        <source-file src="src/android/Logged.java" target-dir="src/com/humanpractice/cordova/keystorage/" />
-        <source-file src="src/android/ReportableException.java" target-dir="src/com/humanpractice/cordova/keystorage/" />
+        <source-file src="src/android/Keychain.java" target-dir="src/com/humanpractice/cordova/keystorage" />
+        <source-file src="src/android/SecureStorage.java" target-dir="src/com/humanpractice/cordova/keystorage" />
+        <source-file src="src/android/FileStorage.java" target-dir="src/com/humanpractice/cordova/keystorage" />
+        <source-file src="src/android/Encryption.java" target-dir="src/com/humanpractice/cordova/keystorage" />
+        <source-file src="src/android/Logged.java" target-dir="src/com/humanpractice/cordova/keystorage" />
+        <source-file src="src/android/ReportableException.java" target-dir="src/com/humanpractice/cordova/keystorage" />
     </platform>
 </plugin>
