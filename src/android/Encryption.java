@@ -20,7 +20,7 @@ final class Encryption {
 
     static String decrypt(byte[] value, PrivateKey privateKey) throws GeneralSecurityException, IOException {
         if (value == null || value.length == 0) {
-          return null;
+          throw new IOException("Cannot decrypt a null or empty value");
         }
 
         Cipher decryption = Cipher.getInstance(RSA_ALGORITHM);

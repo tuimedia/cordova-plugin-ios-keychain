@@ -54,8 +54,7 @@ public final class SecureStorage extends Logged {
             KeyStore keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null);
             PrivateKey privateKey = (PrivateKey) keyStore.getKey(key, null);
-            byte[] encryptedValue = fileStorage.readValue(key);
-            return encryptedValue == null ? null : Encryption.decrypt(encryptedValue, privateKey);
+            return Encryption.decrypt(fileStorage.readValue(key), privateKey);
         } catch (IOException e) {
             logException(e);
             throw new ReportableException(e);
