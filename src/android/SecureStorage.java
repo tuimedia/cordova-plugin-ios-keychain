@@ -1,4 +1,4 @@
-package com.humanpractice.cordova.keystorage;
+package com.tuimedia.cordova.keystorage;
 
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;

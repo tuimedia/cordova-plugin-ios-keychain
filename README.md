@@ -6,10 +6,12 @@ Updated by Max Lynch <max@ionic.io>
 
 Modified by Human Practice to disable iCloud sync.
 
+Modified by Tuimedia Ltd for Cordova 7 install problem.
+
 ### Installation
 
 ```shell
-cordova plugin add https://github.com/humanpractice/cordova-plugin-ios-keychain
+cordova plugin add https://github.com/tuimedia/cordova-plugin-ios-keychain
 ```
 
 ### iCloud keychain *disabled*

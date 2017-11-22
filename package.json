@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/humanpractice/cordova-plugin-ios-keychain.git"
+    "url": "git+https://github.com/tuimedia/cordova-plugin-ios-keychain.git"
   },
   "author": "",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/humanpractice/cordova-plugin-ios-keychain/issues"
+    "url": "https://github.com/tuimedia/cordova-plugin-ios-keychain/issues"
   },
-  "homepage": "https://github.com/humanpractice/cordova-plugin-ios-keychain#readme"
+  "homepage": "https://github.com/tuimedia/cordova-plugin-ios-keychain#readme"
 }
